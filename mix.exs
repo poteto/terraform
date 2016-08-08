@@ -20,7 +20,7 @@ defmodule Terraform.Mixfile do
 
   def package do
     [
-      maintainers: ["Lauren Tan"],
+      maintainers: ["Lauren Tan", "Dan McClain"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/poteto/terraform"}
     ]

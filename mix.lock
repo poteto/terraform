@@ -1,0 +1,2 @@
+%{"earmark": {:hex, :earmark, "1.0.1", "2c2cd903bfdc3de3f189bd9a8d4569a075b88a8981ded9a0d95672f6e2b63141", [:mix], []},
+  "ex_doc": {:git, "https://github.com/elixir-lang/ex_doc.git", "1907d3f52f1276e19753d2405c0991a255807904", []}}
