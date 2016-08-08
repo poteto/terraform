@@ -5,4 +5,6 @@ defmodule Terraform do
     conn = %{conn | resp_headers: headers}
     send_resp(conn, status_code, body)
   end
+
+  # TODO http verb macros
 end

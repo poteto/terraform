@@ -35,7 +35,7 @@ defmodule MyApp.Router do
 end
 ```
 
-Then, define a new `Terraformer`:
+Then, define a new `Terraformer`, which is also a `Plug`:
 
 ```elixir
 defmodule MyApp.Terraformers.Foo do
@@ -43,24 +43,17 @@ defmodule MyApp.Terraformers.Foo do
   alias MyApp.Clients.Foo
   import Plug.Conn
   import Terraform, only: [send_response: 1]
+  
+  def init(opts), do: opts
 
   # match specific path
-  def get("/v1/hello-world", conn) do
+  def call(%{method: "GET", request_path: "/v1/hello-world"} = conn, _) do
     send_resp(conn, 200, "Hello world")
   end
   # match all `get`s
-  def get(path, %Plug.Conn{params: params, req_headers: req_headers} = conn) do
+  def call(%{method: "GET", params: params, req_headers: req_headers} = conn, _) do
     res = Foo.get!(path, req_headers, [params: Map.to_list(params)])
     send_response({:ok, conn, res})
   end
-
-  def put(_, _),      do: raise "Not implemented yet"
-  def patch(_, _),    do: raise "Not implemented yet"
-  def post(_, _),     do: raise "Not implemented yet"
-  def options(_, _),  do: raise "Not implemented yet"
-  def delete(_, _),   do: raise "Not implemented yet"
-  def head(_, _),     do: raise "Not implemented yet"
-  def trace(_, _),    do: raise "Not implemented yet"
-  def connect(_, _),  do: raise "Not implemented yet"
 end
 ```

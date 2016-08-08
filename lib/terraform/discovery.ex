@@ -21,14 +21,8 @@ defmodule Terraform.Discovery do
         end
       end
 
-      defp terraform(%{method: method, request_path: request_path} = conn, terraformer) do
-        verb =
-          method
-          |> String.downcase()
-          |> String.to_atom()
-
-        Logger.debug("Forwarding request to #{terraformer}.#{verb}/2")
-        apply(terraformer, verb, [request_path, conn])
+      defp terraform(conn, terraformer) do
+        apply(terraformer, :call, [conn, []])
       end
 
       defoverridable [terraform: 2]

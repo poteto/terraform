@@ -7,10 +7,12 @@ defmodule TerraformTest do
   defmodule DummyTerraformer do
     import Plug.Conn
 
-    def get(path, conn) do
+    def init(opts), do: opts
+
+    def call(%{method: "GET", request_path: "/bar"} = conn, _) do
       require IEx
       IEx.pry
-      send_resp(conn, 200, path)
+      send_resp(conn, 200, "bar")
     end
   end
 
