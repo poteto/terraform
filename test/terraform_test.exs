@@ -9,35 +9,28 @@ defmodule TerraformTest do
 
     def init(opts), do: opts
 
-    def call(%{method: "GET", request_path: "/bar"} = conn, _) do
-      require IEx
-      IEx.pry
+    def call(%{method: "GET", request_path: "bar"} = conn, _) do
       send_resp(conn, 200, "bar")
     end
 
     def call(conn, _) do
-      require IEx
-      IEx.pry
-      send_resp(conn, 201, "bar")
+      send_resp(conn, 200, "catchall")
+    end
+  end
+
+  defmodule FooController do
+    use Phoenix.Controller
+
+    def index(conn, _) do
+      send_resp(conn, 200, "foo")
     end
   end
 
   defmodule DummyRouter do
-    use Plug.Router
-    use Plug.ErrorHandler
+    use Phoenix.Router
+    use Terraform, terraformer: DummyTerraformer
 
-    plug :dummy
-    plug :match
-    plug :dispatch
-
-    use Terraform.Discovery,
-      terraformer: DummyTerraformer
-
-    get "/foo" do
-      send_resp(conn, 200, "foo")
-    end
-
-    def dummy(conn, _), do: conn
+    get "/foo", FooController, :index
   end
 
   test "forwards requests if not defined on router" do

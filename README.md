@@ -28,21 +28,18 @@ First, add it to `web/router.ex`:
 
 ```elixir
 defmodule MyApp.Router do
-  use Terraform.Discovery,
-    terraformer: MyApp.Terraformers.Foo
+  use Terraform, terraformer: MyApp.Terraformers.Foo
 
   # ...
 end
 ```
 
-Then, define a new `Terraformer`, which is also a `Plug`:
+Then, define a new `Terraformer`, which is also a `Plug`. Any request that goes to a route that isn't defined on your Phoenix app will hit this plug, and you can then handle it:
 
 ```elixir
 defmodule MyApp.Terraformers.Foo do
-  # example client made with HTTPoison
-  alias MyApp.Clients.Foo
+  alias MyApp.Clients.Foo # example client made with HTTPoison
   import Plug.Conn
-  import Terraform, only: [send_response: 1]
   
   def init(opts), do: opts
 
@@ -51,9 +48,14 @@ defmodule MyApp.Terraformers.Foo do
     send_resp(conn, 200, "Hello world")
   end
   # match all `get`s
-  def call(%{method: "GET", params: params, req_headers: req_headers} = conn, _) do
-    res = Foo.get!(path, req_headers, [params: Map.to_list(params)])
+  def call(%{method: "GET", request_path: request_path, params: params, req_headers: req_headers} = conn, _) do
+    res = Foo.get!(request_path, req_headers, [params: Map.to_list(params)])
     send_response({:ok, conn, res})
+  end
+
+  def send_response({:ok, conn, %{headers: headers, status_code: status_code, body: body}}) do
+    conn = %{conn | resp_headers: headers}
+    send_resp(conn, status_code, body)
   end
 end
 ```

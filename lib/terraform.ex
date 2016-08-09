@@ -1,10 +1,30 @@
 defmodule Terraform do
-  import Plug.Conn, only: [send_resp: 3]
-
-  def send_response({:ok, conn, %{headers: headers, status_code: status_code, body: body}}) do
-    conn = %{conn | resp_headers: headers}
-    send_resp(conn, status_code, body)
+  defmacro __using__(opts) do
+    quote location: :keep do
+      Module.register_attribute __MODULE__, :terraformer, []
+      @terraformer Keyword.get(unquote(opts), :terraformer)
+      @before_compile Terraform
+    end
   end
 
-  # TODO http verb macros
+  @doc false
+  defmacro __before_compile__(_env) do
+    quote location: :keep do
+      defoverridable [call: 2]
+
+      def call(conn, opts) do
+        try do
+          super(conn, opts)
+        catch
+          _, %{conn: conn} -> terraform(conn, @terraformer)
+        end
+      end
+
+      defp terraform(conn, terraformer) do
+        terraformer.call(conn, [])
+      end
+
+      defoverridable [terraform: 2]
+    end
+  end
 end
