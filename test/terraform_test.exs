@@ -14,15 +14,24 @@ defmodule TerraformTest do
       IEx.pry
       send_resp(conn, 200, "bar")
     end
+
+    def call(conn, _) do
+      require IEx
+      IEx.pry
+      send_resp(conn, 201, "bar")
+    end
   end
 
   defmodule DummyRouter do
     use Plug.Router
     use Plug.ErrorHandler
-    use Terraform.Discovery,
-      terraformer: DummyTerraformer
 
     plug :dummy
+    plug :match
+    plug :dispatch
+
+    use Terraform.Discovery,
+      terraformer: DummyTerraformer
 
     get "/foo" do
       send_resp(conn, 200, "foo")
@@ -33,8 +42,14 @@ defmodule TerraformTest do
 
   test "forwards requests if not defined on router" do
     conn = call(DummyRouter, conn(:get, "bar"))
-    require IEx
-    IEx.pry
+    assert conn.status == 200
+    assert conn.resp_body == "bar"
+  end
+
+  test "gets handled in the default handler" do
+    conn = call(DummyRouter, conn(:get, "foo"))
+    assert conn.status == 200
+    assert conn.resp_body == "foo"
   end
 
   defp call(mod, conn) do
