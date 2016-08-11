@@ -16,7 +16,7 @@ defmodule Terraform do
         try do
           super(conn, opts)
         catch
-          _, %{conn: conn} -> terraform(conn, @terraformer)
+          _, %Phoenix.Router.NoRouteError{conn: conn} -> terraform(conn, @terraformer)
         end
       end
 
