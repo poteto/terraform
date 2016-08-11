@@ -5,15 +5,16 @@ defmodule TerraformTest do
   doctest Terraform
 
   defmodule DummyTerraformer do
-    import Plug.Conn
+    use Plug.Router
 
-    def init(opts), do: opts
+    plug :match
+    plug :dispatch
 
-    def call(%{method: "GET", request_path: "bar"} = conn, _) do
+    get "/bar" do
       send_resp(conn, 200, "bar")
     end
 
-    def call(conn, _) do
+    match _ do
       send_resp(conn, 200, "catchall")
     end
   end
