@@ -39,16 +39,16 @@ Then, define a new `Terraformer`, which is also a `Plug`. Any request that goes 
 ```elixir
 defmodule MyApp.Terraformers.Foo do
   alias MyApp.Clients.Foo # example client made with HTTPoison
-  import Plug.Conn
+  use Plug.Router
+  plug :match
+  plug :dispatch
   
-  def init(opts), do: opts
-
   # match specific path
-  def call(%{method: "GET", request_path: "/v1/hello-world"} = conn, _) do
-    send_resp(conn, 200, "Hello world")
-  end
+  get "/v1/hello-world", do: send_resp(conn, 200, "Hello world")
+  
   # match all `get`s
-  def call(%{method: "GET", request_path: request_path, params: params, req_headers: req_headers} = conn, _) do
+  get _ do
+    %{method: "GET", request_path: request_path, params: params, req_headers: req_headers} = conn
     res = Foo.get!(request_path, req_headers, [params: Map.to_list(params)])
     send_response({:ok, conn, res})
   end
