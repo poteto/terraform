@@ -1,26 +1,18 @@
 # terraform [![CircleCI](https://circleci.com/gh/poteto/terraform/tree/master.svg?style=svg)](https://circleci.com/gh/poteto/terraform/tree/master)
 
-Terraform is an Elixir library designed to work with Phoenix. Terraform allows you to incrementally transform an older API into one powered by Phoenix - one endpoint at a time.
+Terraform is a `Plug` designed to work with Phoenix. Terraform allows you to incrementally transform an older API into one powered by Phoenix - one endpoint at a time.
 
 View the [demo Phoenix app](https://github.com/poteto/reverse_proxy).
 
 ## Installation
 
-  1. Add `terraform` to your list of dependencies in `mix.exs`:
+Add `terraform` to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:terraform, "~> 0.1.0"}]
-    end
-    ```
-
-  2. Ensure `terraform` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:terraform]]
-    end
-    ```
+```elixir
+def deps do
+  [{:terraform, "~> 0.1.0"}]
+end
+```
 
 ## Usage
 
@@ -34,12 +26,13 @@ defmodule MyApp.Router do
 end
 ```
 
-Then, define a new `Terraformer`, which is also a `Plug`. Any request that goes to a route that isn't defined on your Phoenix app will hit this plug, and you can then handle it:
+Then, define a new `Terraformer`, which uses `Plug.Router`. Any request that goes to a route that isn't defined on your Phoenix app will hit this plug, and you can then handle it using a familiar DSL:
 
 ```elixir
 defmodule MyApp.Terraformers.Foo do
   alias MyApp.Clients.Foo # example client made with HTTPoison
   use Plug.Router
+
   plug :match
   plug :dispatch
   
