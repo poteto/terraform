@@ -1,6 +1,6 @@
-# terraform [![CircleCI](https://circleci.com/gh/poteto/terraform/tree/master.svg?style=svg)](https://circleci.com/gh/poteto/terraform/tree/master)
+# terraform [![Hex](https://img.shields.io/hexpm/v/terraform.svg)](https://hex.pm/packages/terraform) [![CircleCI](https://circleci.com/gh/poteto/terraform/tree/master.svg?style=shield)](https://circleci.com/gh/poteto/terraform/tree/master)
 
-Terraform is a `Plug` designed to work with Phoenix. Terraform allows you to incrementally transform an older API into one powered by Phoenix - one endpoint at a time.
+Terraform is a simple `Plug` designed to work with Phoenix. Terraform allows you to incrementally transform an older API into one powered by Phoenix - one endpoint at a time.
 
 View the [demo Phoenix app](https://github.com/poteto/reverse_proxy).
 
