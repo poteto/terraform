@@ -20,7 +20,7 @@ defmodule Terraform do
         end
       end
 
-      defp terraform(conn, terraformer) do
+      def terraform(conn, terraformer) do
         terraformer.call(conn, [])
       end
 
