@@ -4,9 +4,10 @@ defmodule Terraform.Mixfile do
   def project do
     [app: :terraform,
      version: "0.1.2",
-     elixir: "~> 1.3",
+     elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     aliases: aliases(),
      description: description(),
      package: package(),
      deps: deps()]
@@ -27,11 +28,17 @@ defmodule Terraform.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [extra_applications: [:logger]]
   end
 
   defp deps do
-    [{:ex_doc, github: "elixir-lang/ex_doc", only: :dev},
+    [{:ex_doc, github: "elixir-lang/ex_doc", only: [:dev]},
+     {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+     {:credo, "~> 0.7", only: [:dev, :test]},
      {:phoenix, ">= 1.2.0 and < 2.0.0"}]
+  end
+
+  defp aliases do
+    ["test.lint": ["credo --strict"]]
   end
 end
