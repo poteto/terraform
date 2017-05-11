@@ -15,4 +15,5 @@ dependencies:
     - yes | mix local.rebar
 test:
   override:
+    - mix test.lint
     - mix test
