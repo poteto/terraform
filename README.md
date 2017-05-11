@@ -10,7 +10,7 @@ Add `terraform` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:terraform, "~> 0.1.1"}]
+  [{:terraform, "~> 1.0.0"}]
 end
 ```
 
@@ -35,10 +35,10 @@ defmodule MyApp.Terraformers.Foo do
 
   plug :match
   plug :dispatch
-  
+
   # match specific path
   get "/v1/hello-world", do: send_resp(conn, 200, "Hello world")
-  
+
   # match all `get`s
   get _ do
     %{method: "GET", request_path: request_path, params: params, req_headers: req_headers} = conn
