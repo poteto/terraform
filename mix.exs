@@ -35,7 +35,7 @@ defmodule Terraform.Mixfile do
     [{:ex_doc, github: "elixir-lang/ex_doc", only: [:dev]},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
      {:credo, "~> 0.7", only: [:dev, :test]},
-     {:phoenix, ">= 1.2.0 and < 2.0.0"}]
+     {:phoenix, ">= 1.2.0 and < 2.0.0 or ~> 1.3.0-rc"}]
   end
 
   defp aliases do
