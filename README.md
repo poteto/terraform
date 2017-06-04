@@ -10,7 +10,7 @@ Add `terraform` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:terraform, "~> 1.0.0"}]
+  [{:terraform, "~> 1.0.1"}]
 end
 ```
 
