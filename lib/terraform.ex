@@ -12,7 +12,9 @@ defmodule Terraform do
         # ...
       end
 
-  Then, define a new `Terraformer`, which uses `Plug.Router`. Any request that goes to a route that isn't defined on your Phoenix app will hit this plug, and you can then handle it using a familiar DSL:
+  Then, define a new `Terraformer`, which uses `Plug.Router`. Any request that goes to a route that isn't defined on your Phoenix app will hit this plug, and you can then handle it using a familiar DSL. Refer to [hexdocs](https://hexdocs.pm/plug/Plug.Router.html) for documentation about `Plug.Router`.
+
+  Here's a basic example:
 
       defmodule MyApp.Terraformers.Foo do
         alias MyApp.Clients.Foo # example client made with HTTPoison

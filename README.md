@@ -1,8 +1,18 @@
-# terraform [![Hex](https://img.shields.io/hexpm/v/terraform.svg)](https://hex.pm/packages/terraform) [![CircleCI](https://circleci.com/gh/poteto/terraform/tree/master.svg?style=shield)](https://circleci.com/gh/poteto/terraform/tree/master)
+# terraform [![Hex](https://img.shields.io/hexpm/v/terraform.svg)](https://hex.pm/packages/terraform) [![Build Status](https://travis-ci.com/poteto/terraform.svg?branch=master)](https://travis-ci.com/poteto/terraform) ![Phoenix compatibility](https://img.shields.io/badge/phoenix%20compat-%3E%3D%201.2.0%20and%20%3C%3D%201.4.x-blue)
 
-Terraform is a simple `Plug` designed to work with Phoenix. Terraform allows you to incrementally transform an older API into one powered by Phoenix - one endpoint at a time.
+Terraform is a simple `Plug` designed to work with Phoenix. Terraform allows you to incrementally transform a HTTP API into one powered by Phoenix - one endpoint at a time.
 
 View the [demo Phoenix app](https://github.com/poteto/reverse_proxy).
+
+## Phoenix Compatibility
+
+This package is explicitly tested against the following Phoenix versions:
+
+| Phoenix version  | Compatibility |
+| ------------- | ------------- |
+| ~> 1.2.0  | ✅  |
+| ~> 1.3.0  | ✅  |
+| ~> 1.4.0  | ✅  |
 
 ## Installation
 
@@ -26,7 +36,9 @@ defmodule MyApp.Router do
 end
 ```
 
-Then, define a new `Terraformer`, which uses `Plug.Router`. Any request that goes to a route that isn't defined on your Phoenix app will hit this plug, and you can then handle it using a familiar DSL:
+Then, define a new `Terraformer`, which uses `Plug.Router`. Any request that goes to a route that isn't defined on your Phoenix app will hit this plug, and you can then handle it using a familiar DSL. Refer to [hexdocs](https://hexdocs.pm/plug/Plug.Router.html) for documentation about `Plug.Router`.
+
+Here's a basic example:
 
 ```elixir
 defmodule MyApp.Terraformers.Foo do
@@ -52,3 +64,7 @@ defmodule MyApp.Terraformers.Foo do
   end
 end
 ```
+
+### Reading the request body
+
+`Plug` has an elegant solution to this problem using [`Plug.Conn.read_body`](https://hexdocs.pm/plug/Plug.Conn.html#read_body/2). Refer to this [comment](https://github.com/phoenixframework/phoenix/issues/459#issuecomment-440820663) for details.
