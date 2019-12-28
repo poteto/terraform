@@ -4,7 +4,7 @@ defmodule Terraform.Mixfile do
   def project do
     [app: :terraform,
      version: "1.0.1",
-     elixir: "~> 1.4",
+     elixir: "~> 1.9",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
@@ -34,11 +34,23 @@ defmodule Terraform.Mixfile do
   defp deps do
     [{:ex_doc, github: "elixir-lang/ex_doc", only: [:dev]},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
-     {:credo, "~> 0.7", only: [:dev, :test]},
-     {:phoenix, ">= 1.2.0 and < 2.0.0 or ~> 1.3.0-rc"}]
+     {:credo, "~> 1.1", only: [:dev, :test]},
+
+     {:phoenix, phoenix_opts(Mix.env())}
+    ]
   end
 
   defp aliases do
     ["test.lint": ["credo --strict"]]
   end
+
+  defp phoenix_ver do
+    case System.get_env("PHOENIX_VERSION") do
+      "" <> ver -> ver
+      _ -> "1.2.0"
+    end
+  end
+
+  defp phoenix_opts(:ci), do: "~> #{phoenix_ver()}"
+  defp phoenix_opts(_), do: ">= 1.2.0 and < 2.0.0 or ~> 1.3.0-rc"
 end
