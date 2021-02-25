@@ -1,4 +1,4 @@
-# terraform [![Hex](https://img.shields.io/hexpm/v/terraform.svg)](https://hex.pm/packages/terraform) [![Build Status](https://travis-ci.com/poteto/terraform.svg?branch=master)](https://travis-ci.com/poteto/terraform) ![Phoenix compatibility](https://img.shields.io/badge/phoenix%20compat-%3E%3D%201.2.0%20and%20%3C%3D%201.4.x-blue)
+# terraform [![Hex](https://img.shields.io/hexpm/v/terraform.svg)](https://hex.pm/packages/terraform) [![Build Status](https://travis-ci.com/poteto/terraform.svg?branch=master)](https://travis-ci.com/poteto/terraform) ![Phoenix compatibility](https://img.shields.io/badge/phoenix%20compat-%3E%3D%201.2.0%20and%20%3C%3D%201.5.x-blue)
 
 Terraform is a simple `Plug` designed to work with Phoenix. Terraform allows you to incrementally transform a HTTP API into one powered by Phoenix - one endpoint at a time.
 
@@ -13,6 +13,7 @@ This package is explicitly tested against the following Phoenix versions:
 | ~> 1.2.0  | ✅  |
 | ~> 1.3.0  | ✅  |
 | ~> 1.4.0  | ✅  |
+| ~> 1.5.0  | ✅  |
 
 ## Installation
 
